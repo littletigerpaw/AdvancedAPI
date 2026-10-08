@@ -1,0 +1,281 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Mechanic Shop API",
+    "description": "Swagger documentation for the BackendP2 mechanic shop API.",
+    "version": "1.0.0"
+  },
+  "host": "127.0.0.1:5000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "Health check",
+        "responses": {
+          "200": {
+            "description": "API is running"
+          }
+        }
+      }
+    },
+    "/customers/": {
+      "get": {
+        "summary": "Get all customers",
+        "responses": {
+          "200": {"description": "Customers returned"}
+        }
+      },
+      "post": {
+        "summary": "Create a customer",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CustomerCreate"
+            }
+          }
+        ],
+        "responses": {
+          "201": {"description": "Customer created"}
+        }
+      }
+    },
+    "/customers/{customer_id}": {
+      "get": {
+        "summary": "Get one customer",
+        "parameters": [
+          {
+            "name": "customer_id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {"description": "Customer returned"}
+        }
+      },
+      "put": {
+        "summary": "Update a customer",
+        "parameters": [
+          {
+            "name": "customer_id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CustomerUpdate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {"description": "Customer updated"}
+        }
+      },
+      "delete": {
+        "summary": "Delete a customer",
+        "parameters": [
+          {
+            "name": "customer_id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {"description": "Customer deleted"}
+        }
+      }
+    },
+    "/mechanics/": {
+      "get": {
+        "summary": "Get all mechanics",
+        "responses": {
+          "200": {"description": "Mechanics returned"}
+        }
+      },
+      "post": {
+        "summary": "Create a mechanic",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MechanicCreate"
+            }
+          }
+        ],
+        "responses": {
+          "201": {"description": "Mechanic created"}
+        }
+      }
+    },
+    "/mechanics/{id}": {
+      "put": {
+        "summary": "Update a mechanic",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MechanicUpdate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {"description": "Mechanic updated"}
+        }
+      },
+      "delete": {
+        "summary": "Delete a mechanic",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {"description": "Mechanic deleted"}
+        }
+      }
+    },
+    "/service-tickets/": {
+      "get": {
+        "summary": "Get all service tickets",
+        "responses": {
+          "200": {"description": "Service tickets returned"}
+        }
+      },
+      "post": {
+        "summary": "Create a service ticket",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ServiceTicketCreate"
+            }
+          }
+        ],
+        "responses": {
+          "201": {"description": "Service ticket created"}
+        }
+      }
+    },
+    "/service-tickets/{ticket_id}/assign-mechanic/{mechanic_id}": {
+      "put": {
+        "summary": "Assign a mechanic to a ticket",
+        "parameters": [
+          {
+            "name": "ticket_id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "mechanic_id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {"description": "Mechanic assigned"}
+        }
+      }
+    },
+    "/service-tickets/{ticket_id}/remove-mechanic/{mechanic_id}": {
+      "put": {
+        "summary": "Remove a mechanic from a ticket",
+        "parameters": [
+          {
+            "name": "ticket_id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "mechanic_id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {"description": "Mechanic removed"}
+        }
+      }
+    }
+  },
+  "definitions": {
+    "CustomerCreate": {
+      "type": "object",
+      "required": ["name", "email", "phone"],
+      "properties": {
+        "name": {"type": "string"},
+        "email": {"type": "string"},
+        "phone": {"type": "string"}
+      }
+    },
+    "CustomerUpdate": {
+      "type": "object",
+      "properties": {
+        "name": {"type": "string"},
+        "email": {"type": "string"},
+        "phone": {"type": "string"}
+      }
+    },
+    "MechanicCreate": {
+      "type": "object",
+      "required": ["name", "specialty"],
+      "properties": {
+        "name": {"type": "string"},
+        "specialty": {"type": "string"}
+      }
+    },
+    "MechanicUpdate": {
+      "type": "object",
+      "properties": {
+        "name": {"type": "string"},
+        "specialty": {"type": "string"}
+      }
+    },
+    "ServiceTicketCreate": {
+      "type": "object",
+      "required": ["customer_id", "vin", "issue_description"],
+      "properties": {
+        "customer_id": {"type": "integer"},
+        "vin": {"type": "string"},
+        "issue_description": {"type": "string"},
+        "status": {"type": "string"}
+      }
+    }
+  }
+}
